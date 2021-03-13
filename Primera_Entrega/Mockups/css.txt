@@ -1,0 +1,8 @@
+Gris fondo: RGB 245/245/245 hex: d1d1d1
+Azul banner: RGB 15/56/90 hex: 0f385a
+Fuente: sans-serif
+cuadros: 20px border 1
+color fuente texbox predeterminada: 193/200/201 hex: c1c8c9
+color fuente texbox habilitados: 108/112/117 hex: 6c7075
+Fondo texbox bloqueados: 235/235/235 hex: ebebeb
+color fuente texbox bloqueados: 215/215/217 hex: d4d7d9
