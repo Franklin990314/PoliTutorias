@@ -1,2 +1,2 @@
 # PoliTutorias
-Repositorio para la creación de la aplicación web PoliTutorias
+Proyecto de Desarrollo de aplicaciones web - Institución Universitaria Politécnico Grancolombiano
