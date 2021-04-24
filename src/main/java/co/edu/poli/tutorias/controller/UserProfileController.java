@@ -32,7 +32,7 @@ public class UserProfileController {
             if (user.getId().equals(id)) {
                 UserProfileDTO response = userProfileLogic.getProfile(id);
                 if (response != null) {
-                    return new ResponseEntity<>(response, HttpStatus.CREATED);
+                    return new ResponseEntity<>(response, HttpStatus.OK);
                 }
             } else {
                 return new ResponseEntity<>(HttpStatus.NON_AUTHORITATIVE_INFORMATION);

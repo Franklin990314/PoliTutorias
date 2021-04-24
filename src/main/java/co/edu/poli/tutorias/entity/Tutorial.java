@@ -15,16 +15,16 @@ public class Tutorial {
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Integer id;
 
-    @Column(name="college_career")
+    @Column(name="college_career", nullable = false)
     private String collegeCareer;
 
-    @Column(name="courses")
-    private String courses;
+    @Column(name="course", nullable = false)
+    private String course;
 
-    @Column(name="instructor")
+    @Column(name="instructor", nullable = false)
     private String instructor;
 
-    @Column(name="availability_date")
+    @Column(name="availability_date", nullable = false)
     private String availabilityDate;
 
     @Temporal(TemporalType.TIMESTAMP)
@@ -33,11 +33,11 @@ public class Tutorial {
     private Date startTime;
 
     @Temporal(TemporalType.TIMESTAMP)
-    @Column(name = "end_time", nullable = false)
+    @Column(name = "end_time")
     @DateTimeFormat(pattern = "YYYY-MM-DD HH:MM:SS")
     private Date endTime;
 
-    @Column(name="status")
+    @Column(name="status", nullable = false)
     private String status;
 
     @Column(name="comment")
@@ -64,12 +64,12 @@ public class Tutorial {
         this.collegeCareer = collegeCareer;
     }
 
-    public String getCourses() {
-        return courses;
+    public String getCourse() {
+        return course;
     }
 
-    public void setCourses(String courses) {
-        this.courses = courses;
+    public void setCourse(String course) {
+        this.course = course;
     }
 
     public String getInstructor() {

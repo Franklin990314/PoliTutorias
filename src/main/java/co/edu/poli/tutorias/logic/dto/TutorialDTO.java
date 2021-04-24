@@ -1,15 +1,17 @@
 package co.edu.poli.tutorias.logic.dto;
 
-import java.util.Date;
+import java.util.List;
 
 public class TutorialDTO {
 
     private Integer id;
     private String collegeCareer;
-    private String courses;
+    private String course;
     private String instructor;
-    private String availabilityDate;
-    private Date startTime;
+    private List<String> availabilityDate;
+    private String availabilityStartTime;
+    private String availabilityEndTime;
+    private String startTime;
     private String endTime;
     private String status;
     private String comment;
@@ -30,12 +32,12 @@ public class TutorialDTO {
         this.collegeCareer = collegeCareer;
     }
 
-    public String getCourses() {
-        return courses;
+    public String getCourse() {
+        return course;
     }
 
-    public void setCourses(String courses) {
-        this.courses = courses;
+    public void setCourse(String course) {
+        this.course = course;
     }
 
     public String getInstructor() {
@@ -46,19 +48,35 @@ public class TutorialDTO {
         this.instructor = instructor;
     }
 
-    public String getAvailabilityDate() {
+    public List<String> getAvailabilityDate() {
         return availabilityDate;
     }
 
-    public void setAvailabilityDate(String availabilityDate) {
+    public void setAvailabilityDate(List<String> availabilityDate) {
         this.availabilityDate = availabilityDate;
     }
 
-    public Date getStartTime() {
+    public String getAvailabilityStartTime() {
+        return availabilityStartTime;
+    }
+
+    public void setAvailabilityStartTime(String availabilityStartTime) {
+        this.availabilityStartTime = availabilityStartTime;
+    }
+
+    public String getAvailabilityEndTime() {
+        return availabilityEndTime;
+    }
+
+    public void setAvailabilityEndTime(String availabilityEndTime) {
+        this.availabilityEndTime = availabilityEndTime;
+    }
+
+    public String getStartTime() {
         return startTime;
     }
 
-    public void setStartTime(Date startTime) {
+    public void setStartTime(String startTime) {
         this.startTime = startTime;
     }
 

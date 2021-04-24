@@ -29,6 +29,7 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
 		http.csrf().disable() //Cross-Site Request Forgery (falsificación de petición en sitios cruzados)
 			.authorizeRequests()
 			.antMatchers("/api/profile").hasAnyRole("TEACHER", "STUDENT")
+				.antMatchers("/api/tutorial").hasRole("STUDENT")
 			.anyRequest().authenticated() //For any other request, you do not need a specific role but still need to be authenticated.
 			.and()
 			.httpBasic(); //authentication method
