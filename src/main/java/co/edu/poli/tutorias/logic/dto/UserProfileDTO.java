@@ -1,33 +1,13 @@
-package co.edu.poli.tutorias.entity;
+package co.edu.poli.tutorias.logic.dto;
 
-import javax.persistence.*;
-import java.util.Set;
+public class UserProfileDTO {
 
-@Entity
-@Table(name="user_profile")
-public class UserProfile {
-    @Id
-    @Column(name="id")
-    @GeneratedValue(strategy = GenerationType.AUTO)
     private Integer id;
-
-    @Column(name="name")
     private String name;
-
-    @Column(name="code")
     private String code;
-
-    @Column(name="mail")
     private String mail;
-
-    @Column(name="program")
     private String program;
-
-    @Column(name="cell_phone")
     private String cell_phone;
-
-    @OneToMany(mappedBy = "userProfile", cascade = CascadeType.ALL)
-    private Set<Tutorial> tutorials;
 
     public Integer getId() {
         return id;
@@ -75,13 +55,5 @@ public class UserProfile {
 
     public void setCell_phone(String cell_phone) {
         this.cell_phone = cell_phone;
-    }
-
-    public Set<Tutorial> getTutorials() {
-        return tutorials;
-    }
-
-    public void setTutorials(Set<Tutorial> tutorials) {
-        this.tutorials = tutorials;
     }
 }
