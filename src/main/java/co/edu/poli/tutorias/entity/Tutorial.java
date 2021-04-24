@@ -21,6 +21,9 @@ public class Tutorial {
     @Column(name="course", nullable = false)
     private String course;
 
+    @Column(name="student", nullable = false)
+    private String student;
+
     @Column(name="instructor", nullable = false)
     private String instructor;
 
@@ -70,6 +73,14 @@ public class Tutorial {
 
     public void setCourse(String course) {
         this.course = course;
+    }
+
+    public String getStudent() {
+        return student;
+    }
+
+    public void setStudent(String student) {
+        this.student = student;
     }
 
     public String getInstructor() {

@@ -11,6 +11,10 @@ import co.edu.poli.tutorias.logic.util.Util;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Set;
+
 @Service
 public class TutorialLogicImpl implements TutorialLogic {
 
@@ -23,10 +27,12 @@ public class TutorialLogicImpl implements TutorialLogic {
     @Override
     public TutorialDTO createTutorial(TutorialDTO data, UserDTO user) throws Exception {
 
+        UserProfile userProfile;
         this.validateDTOTutorial(data);
         Tutorial tutorial;
         try {
-            tutorial = Util.mapDTOToEntityTutorial(data);
+            userProfile = userProfileRepository.findById(user.getId()).get();
+            tutorial = Util.mapDTOToEntityTutorial(data, userProfile);
             tutorialRepository.save(tutorial);
             data.setId(tutorial.getId());
         } catch (Exception exc) {
@@ -34,7 +40,6 @@ public class TutorialLogicImpl implements TutorialLogic {
         }
 
         try {
-            UserProfile userProfile = userProfileRepository.findById(user.getId()).get();
             userProfile.getTutorials().add(tutorial);
             userProfileRepository.save(userProfile);
         } catch (Exception exc) {
@@ -42,6 +47,40 @@ public class TutorialLogicImpl implements TutorialLogic {
         }
 
         return data;
+    }
+
+    @Override
+    public List<TutorialDTO> getTutorial(UserDTO user) throws Exception {
+        List<TutorialDTO> response = new ArrayList<>();
+        try {
+            UserProfile userProfile = userProfileRepository.findById(user.getId()).get();
+            Set<Tutorial> tutorials = userProfile.getTutorials();
+            for (Tutorial data: tutorials) {
+                response.add(Util.mapEntityToDTOTutorial(data));
+            }
+        } catch (Exception exc) {
+            throw new Exception("Error. Se encontro un problema al consultar las tutorias del usuario.");
+        }
+        return response;
+    }
+
+    @Override
+    public TutorialDTO getTutorial(Integer id, UserDTO user) throws Exception {
+        TutorialDTO response;
+        try {
+            Tutorial tutorial = tutorialRepository.findById(id).get();
+            UserProfile userProfile = tutorial.getUserProfile();
+
+            if (user.getId() == userProfile.getId()) {
+                response = Util.mapEntityToDTOTutorial(tutorial);
+            } else {
+                return null;
+            }
+        } catch (Exception exc) {
+            throw new Exception("Error. No se pudo obtener la tutoria");
+        }
+
+        return response;
     }
 
     private void validateDTOTutorial(TutorialDTO data) throws Exception {

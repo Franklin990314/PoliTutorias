@@ -6,8 +6,10 @@ import co.edu.poli.tutorias.logic.dto.TutorialDTO;
 import co.edu.poli.tutorias.logic.dto.UserProfileDTO;
 
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
+import java.util.List;
 
 public class Util {
 
@@ -33,7 +35,7 @@ public class Util {
         return response;
     }
 
-    public static Tutorial mapDTOToEntityTutorial(TutorialDTO data) throws Exception {
+    public static Tutorial mapDTOToEntityTutorial(TutorialDTO data, UserProfile userProfile) throws Exception {
         Tutorial response = new Tutorial();
 
         Date today = Calendar.getInstance().getTime();
@@ -43,6 +45,7 @@ public class Util {
         response.setCollegeCareer(data.getCollegeCareer());
         response.setCourse(data.getCourse());
         response.setInstructor(data.getInstructor());
+        response.setStudent(userProfile.getName());
 
         String availabilityDate = "";
         for (String day: data.getAvailabilityDate()) {
@@ -55,6 +58,32 @@ public class Util {
         response.setAvailabilityDate(availabilityDate);
         response.setStartTime(new SimpleDateFormat(DATE_FORMAT_HOUR).parse(data.getStartTime()));
         response.setStatus(data.getStatus());
+        response.setUserProfile(userProfile);
+
+        return response;
+    }
+
+    public static TutorialDTO mapEntityToDTOTutorial(Tutorial data) {
+        TutorialDTO response = new TutorialDTO();
+
+        response.setId(data.getId());
+        response.setCollegeCareer(data.getCollegeCareer());
+        response.setCourse(data.getCourse());
+        response.setInstructor(data.getInstructor());
+        response.setStudent(data.getStudent());
+
+        String availabilityDateParts[] = data.getAvailabilityDate().split("-");
+        String availabilityDate[] = availabilityDateParts[0].split(", ");
+        List<String> availabilityDateList = new ArrayList<>();
+        for (String day: availabilityDate) availabilityDateList.add(day.trim());
+
+        response.setAvailabilityDate(availabilityDateList);
+        response.setAvailabilityStartTime(availabilityDateParts[1].trim());
+        response.setAvailabilityEndTime(availabilityDateParts[2].trim());
+        response.setStartTime(new SimpleDateFormat(DATE_FORMAT_HOUR).format(data.getStartTime()));
+        response.setEndTime(data.getEndTime() != null ? new SimpleDateFormat(DATE_FORMAT_HOUR).format(data.getEndTime()) : "");
+        response.setStatus(data.getStatus());
+        response.setComment(data.getComment() != null ? data.getComment() : "");
 
         return response;
     }

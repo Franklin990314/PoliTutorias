@@ -8,6 +8,7 @@ public class TutorialDTO {
     private String collegeCareer;
     private String course;
     private String instructor;
+    private String student;
     private List<String> availabilityDate;
     private String availabilityStartTime;
     private String availabilityEndTime;
@@ -46,6 +47,14 @@ public class TutorialDTO {
 
     public void setInstructor(String instructor) {
         this.instructor = instructor;
+    }
+
+    public String getStudent() {
+        return student;
+    }
+
+    public void setStudent(String student) {
+        this.student = student;
     }
 
     public List<String> getAvailabilityDate() {
