@@ -1,7 +1,5 @@
 package co.edu.poli.tutorias.controller;
 
-import co.edu.poli.tutorias.entity.Tutorial;
-import co.edu.poli.tutorias.entity.repository.TutorialRepository;
 import co.edu.poli.tutorias.logic.TutorialLogic;
 import co.edu.poli.tutorias.logic.dto.TutorialDTO;
 import co.edu.poli.tutorias.logic.dto.UserDTO;
@@ -21,7 +19,7 @@ public class TutorialController {
     @Autowired
     TutorialLogic tutorialLogic;
 
-    @PostMapping("/tutorial")
+    @RequestMapping (value = "/tutorial", method = RequestMethod.POST)
     public ResponseEntity<Object> createTutorial(@RequestBody TutorialDTO tutorialDTO, HttpSession session) throws Exception {
         try {
             UserDTO user = (UserDTO) session.getAttribute("userInfo");
@@ -38,7 +36,7 @@ public class TutorialController {
         return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
     }
 
-    @GetMapping("/tutorial")
+    @RequestMapping (value = "/tutorial", method = RequestMethod.GET)
     public ResponseEntity<Object> getTutorial(HttpSession session) throws Exception {
         try {
             UserDTO user = (UserDTO) session.getAttribute("userInfo");
@@ -59,7 +57,7 @@ public class TutorialController {
         return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
     }
 
-    @GetMapping("/tutorial/{id}")
+    @RequestMapping (value = "/tutorial/{id}", method = RequestMethod.GET)
     public ResponseEntity<Object> getTutorialById(@PathVariable Integer id, HttpSession session) throws Exception {
         try {
             UserDTO user = (UserDTO) session.getAttribute("userInfo");
@@ -76,7 +74,7 @@ public class TutorialController {
         }
     }
 
-    @DeleteMapping ("/tutorial/{id}")
+    @RequestMapping (value = "/tutorial/{id}", method = RequestMethod.DELETE)
     public ResponseEntity<Object> deleteTutorialById(@PathVariable Integer id, HttpSession session) throws Exception {
         try {
             UserDTO user = (UserDTO) session.getAttribute("userInfo");

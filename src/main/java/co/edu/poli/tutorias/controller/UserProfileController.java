@@ -1,8 +1,5 @@
 package co.edu.poli.tutorias.controller;
 
-import co.edu.poli.tutorias.entity.User;
-import co.edu.poli.tutorias.entity.UserProfile;
-import co.edu.poli.tutorias.entity.repository.UserProfileRepository;
 import co.edu.poli.tutorias.logic.UserProfileLogic;
 import co.edu.poli.tutorias.logic.dto.UserDTO;
 import co.edu.poli.tutorias.logic.dto.UserProfileDTO;
@@ -10,10 +7,7 @@ import co.edu.poli.tutorias.service.handler.ExceptionHandler;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.http.HttpSession;
 
@@ -24,7 +18,7 @@ public class UserProfileController {
     @Autowired
     UserProfileLogic userProfileLogic;
 
-    @GetMapping("/profile/{id}")
+    @RequestMapping (value = "/profile/{id}", method = RequestMethod.GET)
     public ResponseEntity<Object> getProfile(@PathVariable Integer id, HttpSession session) {
         try {
             UserDTO user = (UserDTO) session.getAttribute("userInfo");
