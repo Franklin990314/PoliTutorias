@@ -83,6 +83,24 @@ public class TutorialLogicImpl implements TutorialLogic {
         return response;
     }
 
+    @Override
+    public boolean deleteTutorial(Integer id, UserDTO user) throws Exception {
+
+        try {
+            Tutorial tutorial = tutorialRepository.findById(id).get();
+            UserProfile userProfile = tutorial.getUserProfile();
+
+            if (user.getId() == userProfile.getId()) {
+                tutorialRepository.delete(tutorial);
+                return (true);
+            } else {
+                return (false);
+            }
+        } catch (Exception exc) {
+            throw new Exception("Error. No se pudo obtener la tutoria");
+        }
+    }
+
     private void validateDTOTutorial(TutorialDTO data) throws Exception {
 
         if (data.getCollegeCareer() == null) {

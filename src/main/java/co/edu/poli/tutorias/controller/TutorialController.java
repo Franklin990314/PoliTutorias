@@ -76,4 +76,21 @@ public class TutorialController {
         }
     }
 
+    @DeleteMapping ("/tutorial/{id}")
+    public ResponseEntity<Object> deleteTutorialById(@PathVariable Integer id, HttpSession session) throws Exception {
+        try {
+            UserDTO user = (UserDTO) session.getAttribute("userInfo");
+
+            boolean response = tutorialLogic.deleteTutorial(id, user);
+            if (response) {
+                return new ResponseEntity<>(HttpStatus.NO_CONTENT);
+            } else {
+                return new ResponseEntity<>(HttpStatus.NON_AUTHORITATIVE_INFORMATION);
+            }
+        } catch (Exception exc) {
+            ExceptionHandler exceptionHandler = new ExceptionHandler();
+            return exceptionHandler.toResponse(exc, HttpStatus.NOT_FOUND);
+        }
+    }
+
 }
