@@ -39,8 +39,8 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
 			.authenticationEntryPoint(authEntryPointJwt)
 			.and()
 			.logout()
-			.deleteCookies("JSESSIONID")
-			.permitAll();
+			.invalidateHttpSession(true)
+			.deleteCookies("JSESSIONID");
 
 	}
 
