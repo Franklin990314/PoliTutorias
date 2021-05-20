@@ -5,6 +5,7 @@ import co.edu.poli.tutorias.security.jwt.AuthEntryPointJwt;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.http.HttpMethod;
 import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
@@ -33,7 +34,11 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
 		http.cors().and().csrf().disable() //Cross-Site Request Forgery (falsificación de petición en sitios cruzados)
 			.authorizeRequests()
 			.antMatchers("/api/profile").hasAnyRole(Util.ROLE_TEACHER, Util.ROLE_STUDENT)
-			.antMatchers("/api/tutorial").hasRole(Util.ROLE_STUDENT)
+			.antMatchers("/api/parameter").hasAnyRole(Util.ROLE_STUDENT)
+			.antMatchers(HttpMethod.GET,"/api/tutorial").hasAnyRole(Util.ROLE_TEACHER, Util.ROLE_STUDENT)
+			.antMatchers(HttpMethod.PUT,"/api/tutorial").hasAnyRole(Util.ROLE_TEACHER, Util.ROLE_STUDENT)
+			.antMatchers(HttpMethod.POST, "/api/tutorial").hasAnyRole(Util.ROLE_STUDENT)
+			.antMatchers(HttpMethod.DELETE, "/api/tutorial").hasAnyRole(Util.ROLE_STUDENT)
 			.anyRequest().authenticated() //For any other request, you do not need a specific role but still need to be authenticated.
 			.and()
 			.httpBasic()//authentication method
