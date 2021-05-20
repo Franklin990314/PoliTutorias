@@ -6,9 +6,9 @@ import java.util.Set;
 @Entity
 @Table(name="user_profile")
 public class UserProfile {
+
     @Id
     @Column(name="id")
-    @GeneratedValue(strategy = GenerationType.AUTO)
     private Integer id;
 
     @Column(name="name")
@@ -20,6 +20,9 @@ public class UserProfile {
     @Column(name="mail")
     private String mail;
 
+    @Column(name="faculty")
+    private String faculty;
+
     @Column(name="program")
     private String program;
 
@@ -28,6 +31,9 @@ public class UserProfile {
 
     @OneToMany(mappedBy = "userProfile", cascade = CascadeType.ALL)
     private Set<Tutorial> tutorials;
+
+    @OneToMany(mappedBy = "instructorProfile", cascade = CascadeType.ALL)
+    private Set<Tutorial> instructorTutorials;
 
     public Integer getId() {
         return id;
@@ -61,6 +67,14 @@ public class UserProfile {
         this.mail = mail;
     }
 
+    public String getFaculty() {
+        return faculty;
+    }
+
+    public void setFaculty(String faculty) {
+        this.faculty = faculty;
+    }
+
     public String getProgram() {
         return program;
     }
@@ -83,5 +97,13 @@ public class UserProfile {
 
     public void setTutorials(Set<Tutorial> tutorials) {
         this.tutorials = tutorials;
+    }
+
+    public Set<Tutorial> getInstructorTutorials() {
+        return instructorTutorials;
+    }
+
+    public void setInstructorTutorials(Set<Tutorial> instructorTutorials) {
+        this.instructorTutorials = instructorTutorials;
     }
 }

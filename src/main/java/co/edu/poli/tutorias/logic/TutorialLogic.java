@@ -1,6 +1,5 @@
 package co.edu.poli.tutorias.logic;
 
-import co.edu.poli.tutorias.entity.User;
 import co.edu.poli.tutorias.logic.dto.TutorialDTO;
 import co.edu.poli.tutorias.logic.dto.UserDTO;
 
@@ -12,4 +11,5 @@ public interface TutorialLogic {
     List<TutorialDTO> getTutorial(UserDTO user) throws Exception;
     TutorialDTO getTutorial(Integer id, UserDTO user) throws Exception;
     boolean deleteTutorial(Integer id, UserDTO user) throws Exception;
+    TutorialDTO updateTutorial(Integer id, TutorialDTO tutorialDTO, UserDTO user) throws Exception;
 }

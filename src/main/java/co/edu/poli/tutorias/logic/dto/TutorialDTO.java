@@ -9,6 +9,7 @@ public class TutorialDTO {
     private String course;
     private String instructor;
     private String student;
+    private String scheduledDate;
     private List<String> availabilityDate;
     private String availabilityStartTime;
     private String availabilityEndTime;
@@ -55,6 +56,14 @@ public class TutorialDTO {
 
     public void setStudent(String student) {
         this.student = student;
+    }
+
+    public String getScheduledDate() {
+        return scheduledDate;
+    }
+
+    public void setScheduledDate(String scheduledDate) {
+        this.scheduledDate = scheduledDate;
     }
 
     public List<String> getAvailabilityDate() {

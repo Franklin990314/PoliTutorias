@@ -6,6 +6,7 @@ public class UserProfileDTO {
     private String name;
     private String code;
     private String mail;
+    private String faculty;
     private String program;
     private String cell_phone;
 
@@ -39,6 +40,14 @@ public class UserProfileDTO {
 
     public void setMail(String mail) {
         this.mail = mail;
+    }
+
+    public String getFaculty() {
+        return faculty;
+    }
+
+    public void setFaculty(String faculty) {
+        this.faculty = faculty;
     }
 
     public String getProgram() {

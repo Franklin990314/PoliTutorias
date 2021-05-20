@@ -27,6 +27,9 @@ public class Tutorial {
     @Column(name="instructor", nullable = false)
     private String instructor;
 
+    @Column(name="scheduled_date")
+    private String scheduledDate;
+
     @Column(name="availability_date", nullable = false)
     private String availabilityDate;
 
@@ -50,6 +53,11 @@ public class Tutorial {
     @JoinColumn(name = "USER_ID")
     @JsonIgnore
     private UserProfile userProfile;
+
+    @ManyToOne
+    @JoinColumn(name = "INSTRUCTOR_ID")
+    @JsonIgnore
+    private UserProfile instructorProfile;
 
     public Integer getId() {
         return id;
@@ -89,6 +97,14 @@ public class Tutorial {
 
     public void setInstructor(String instructor) {
         this.instructor = instructor;
+    }
+
+    public String getScheduledDate() {
+        return scheduledDate;
+    }
+
+    public void setScheduledDate(String scheduledDate) {
+        this.scheduledDate = scheduledDate;
     }
 
     public String getAvailabilityDate() {
@@ -137,5 +153,13 @@ public class Tutorial {
 
     public void setUserProfile(UserProfile userProfile) {
         this.userProfile = userProfile;
+    }
+
+    public UserProfile getInstructorProfile() {
+        return instructorProfile;
+    }
+
+    public void setInstructorProfile(UserProfile instructorProfile) {
+        this.instructorProfile = instructorProfile;
     }
 }

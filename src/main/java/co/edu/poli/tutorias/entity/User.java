@@ -5,9 +5,9 @@ import javax.persistence.*;
 @Entity
 @Table(name="users")
 public class User {
+
     @Id
     @Column(name="id")
-    @GeneratedValue(strategy = GenerationType.AUTO)
     private Integer id;
 
     @Column(name="user_name")

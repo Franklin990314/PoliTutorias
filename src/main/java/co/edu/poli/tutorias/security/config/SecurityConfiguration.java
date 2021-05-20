@@ -1,5 +1,6 @@
 package co.edu.poli.tutorias.security.config;
 
+import co.edu.poli.tutorias.logic.util.Util;
 import co.edu.poli.tutorias.security.jwt.AuthEntryPointJwt;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
@@ -31,8 +32,8 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
 	protected void configure(HttpSecurity http) throws Exception {
 		http.cors().and().csrf().disable() //Cross-Site Request Forgery (falsificación de petición en sitios cruzados)
 			.authorizeRequests()
-			.antMatchers("/api/profile").hasAnyRole("TEACHER", "STUDENT")
-			.antMatchers("/api/tutorial").hasRole("STUDENT")
+			.antMatchers("/api/profile").hasAnyRole(Util.ROLE_TEACHER, Util.ROLE_STUDENT)
+			.antMatchers("/api/tutorial").hasRole(Util.ROLE_STUDENT)
 			.anyRequest().authenticated() //For any other request, you do not need a specific role but still need to be authenticated.
 			.and()
 			.httpBasic()//authentication method

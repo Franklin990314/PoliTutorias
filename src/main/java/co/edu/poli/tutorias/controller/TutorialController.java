@@ -31,7 +31,7 @@ public class TutorialController {
             }
         } catch (Exception exc) {
             ExceptionHandler exceptionHandler = new ExceptionHandler();
-            return exceptionHandler.toResponse(exc, HttpStatus.NOT_FOUND);
+            return exceptionHandler.toResponse(exc, HttpStatus.BAD_REQUEST);
         }
 
         return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
@@ -45,7 +45,7 @@ public class TutorialController {
             List<TutorialDTO> response = tutorialLogic.getTutorial(user);
             if (response != null) {
                 if(response.size() != 0){
-                    return new ResponseEntity<>(response, HttpStatus.CREATED);
+                    return new ResponseEntity<>(response, HttpStatus.OK);
                 } else {
                     return new ResponseEntity<>(HttpStatus.NOT_FOUND);
                 }
@@ -64,6 +64,23 @@ public class TutorialController {
             UserDTO user = (UserDTO) session.getAttribute("userInfo");
 
             TutorialDTO response = tutorialLogic.getTutorial(id, user);
+            if (response != null) {
+                return new ResponseEntity<>(response, HttpStatus.OK);
+            } else {
+                return new ResponseEntity<>(HttpStatus.NON_AUTHORITATIVE_INFORMATION);
+            }
+        } catch (Exception exc) {
+            ExceptionHandler exceptionHandler = new ExceptionHandler();
+            return exceptionHandler.toResponse(exc, HttpStatus.NOT_FOUND);
+        }
+    }
+
+    @RequestMapping (value = "/tutorial/{id}", method = RequestMethod.PUT)
+    public ResponseEntity<Object> updateTutorial(@PathVariable Integer id, @RequestBody TutorialDTO tutorialDTO, HttpSession session) throws Exception {
+        try {
+            UserDTO user = (UserDTO) session.getAttribute("userInfo");
+
+            TutorialDTO response = tutorialLogic.updateTutorial(id, tutorialDTO, user);
             if (response != null) {
                 return new ResponseEntity<>(response, HttpStatus.OK);
             } else {
