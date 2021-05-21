@@ -28,7 +28,7 @@ public class MailServiceImpl implements MailService {
     private String GREET_INSTRUCTOR = "Buen día Apreciado docente,";
 
     private String TXT_INFO = ", para más información ingrese al canal Politutorias.";
-    private String ACTION_CREATION_STUDENT = "Se le informa que se ha creado de satisfactoriamente la tutoría con el radicado ";
+    private String ACTION_CREATION_STUDENT = "Se le informa que se ha creado satisfactoriamente la tutoría con el radicado ";
     private String ACTION_CREATION_INSTRUCTOR = "Se le informa que se ha creado una solicitud de tutoría a su nombre con el radicado ";
     private String INFO_ACTION = "Se le informa que la solicitud de tutoría con el radicado ";
     private String ACTION_MODIFICATION = ", cambio al estado ";

@@ -2,6 +2,7 @@ package co.edu.poli.tutorias.controller;
 
 import co.edu.poli.tutorias.logic.TutorialLogic;
 import co.edu.poli.tutorias.logic.dto.TutorialDTO;
+import co.edu.poli.tutorias.logic.dto.TutorialsDTO;
 import co.edu.poli.tutorias.logic.dto.UserDTO;
 import co.edu.poli.tutorias.service.handler.ExceptionHandler;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -42,9 +43,11 @@ public class TutorialController {
         try {
             UserDTO user = (UserDTO) session.getAttribute("userInfo");
 
-            List<TutorialDTO> response = tutorialLogic.getTutorial(user);
-            if (response != null) {
-                if(response.size() != 0){
+            List<TutorialDTO> data = tutorialLogic.getTutorial(user);
+            if (data != null) {
+                if(data.size() != 0){
+                    TutorialsDTO response = new TutorialsDTO();
+                    response.setTutorialList(data);
                     return new ResponseEntity<>(response, HttpStatus.OK);
                 } else {
                     return new ResponseEntity<>(HttpStatus.NOT_FOUND);

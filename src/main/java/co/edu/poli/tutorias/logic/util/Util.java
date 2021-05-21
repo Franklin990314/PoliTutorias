@@ -1,5 +1,6 @@
 package co.edu.poli.tutorias.logic.util;
 
+import co.edu.poli.tutorias.entity.Course;
 import co.edu.poli.tutorias.entity.Tutorial;
 import co.edu.poli.tutorias.entity.UserProfile;
 import co.edu.poli.tutorias.logic.dto.TutorialDTO;
@@ -39,7 +40,7 @@ public class Util {
         return response;
     }
 
-    public static Tutorial mapDTOToEntityTutorial(TutorialDTO data, UserProfile userProfile, UserProfile instructorProfile) throws Exception {
+    public static Tutorial mapDTOToEntityTutorial(TutorialDTO data, UserProfile userProfile, UserProfile instructorProfile, Course course) throws Exception {
         Tutorial response = new Tutorial();
 
         Date today = Calendar.getInstance().getTime();
@@ -47,7 +48,7 @@ public class Util {
         data.setStatus(STATUS_CREATED);
 
         response.setCollegeCareer(data.getCollegeCareer());
-        response.setCourse(data.getCourse());
+        response.setCourse(course.getName());
         response.setInstructor(instructorProfile.getName());
         response.setStudent(userProfile.getName());
         response.setAvailabilityDate(generateAvailabilityDate(data));
@@ -63,6 +64,7 @@ public class Util {
         TutorialDTO response = new TutorialDTO();
 
         response.setId(data.getId());
+        response.setIdString(formatCaseNumber(data.getId().intValue()));
         response.setCollegeCareer(data.getCollegeCareer());
         response.setCourse(data.getCourse());
         response.setInstructor(data.getInstructor());

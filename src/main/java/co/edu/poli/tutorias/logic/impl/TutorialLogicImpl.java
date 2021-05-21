@@ -1,7 +1,9 @@
 package co.edu.poli.tutorias.logic.impl;
 
+import co.edu.poli.tutorias.entity.Course;
 import co.edu.poli.tutorias.entity.Tutorial;
 import co.edu.poli.tutorias.entity.UserProfile;
+import co.edu.poli.tutorias.entity.repository.CourseRepository;
 import co.edu.poli.tutorias.entity.repository.TutorialRepository;
 import co.edu.poli.tutorias.entity.repository.UserProfileRepository;
 import co.edu.poli.tutorias.logic.TutorialLogic;
@@ -28,6 +30,9 @@ public class TutorialLogicImpl implements TutorialLogic {
     @Autowired
     private MailService notificationService;
 
+    @Autowired
+    private CourseRepository courseRepository;
+
     @Override
     public TutorialDTO createTutorial(TutorialDTO data, UserDTO user) throws Exception {
 
@@ -38,7 +43,8 @@ public class TutorialLogicImpl implements TutorialLogic {
         try {
             userProfile = userProfileRepository.findById(user.getId()).get();
             instructorProfile = userProfileRepository.findById(Integer.parseInt(data.getInstructor())).get();
-            tutorial = Util.mapDTOToEntityTutorial(data, userProfile, instructorProfile);
+            List<Course> courseList = courseRepository.findByCode(data.getCourse());
+            tutorial = Util.mapDTOToEntityTutorial(data, userProfile, instructorProfile, courseList.get(0));
             tutorialRepository.save(tutorial);
             data.setId(tutorial.getId());
         } catch (Exception exc) {
@@ -86,6 +92,9 @@ public class TutorialLogicImpl implements TutorialLogic {
 
             if (user.getId() == userProfile.getId()) {
                 response = Util.mapEntityToDTOTutorial(tutorial);
+                response.setAvailabilityStartTime(Util.generateAvailabilityDate(response));
+                response.setAvailabilityDate(new ArrayList<>());
+                response.setAvailabilityEndTime("");
             } else {
                 return null;
             }

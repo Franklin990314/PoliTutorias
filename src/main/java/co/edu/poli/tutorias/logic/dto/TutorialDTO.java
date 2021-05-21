@@ -5,6 +5,7 @@ import java.util.List;
 public class TutorialDTO {
 
     private Integer id;
+    private String idString;
     private String collegeCareer;
     private String course;
     private String instructor;
@@ -24,6 +25,14 @@ public class TutorialDTO {
 
     public void setId(Integer id) {
         this.id = id;
+    }
+
+    public String getIdString() {
+        return idString;
+    }
+
+    public void setIdString(String idString) {
+        this.idString = idString;
     }
 
     public String getCollegeCareer() {
