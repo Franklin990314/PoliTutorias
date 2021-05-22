@@ -47,6 +47,7 @@ public class TutorialLogicImpl implements TutorialLogic {
             tutorial = Util.mapDTOToEntityTutorial(data, userProfile, instructorProfile, courseList.get(0));
             tutorialRepository.save(tutorial);
             data.setId(tutorial.getId());
+            data.setIdString(Util.formatCaseNumber(tutorial.getId()));
         } catch (Exception exc) {
             throw new Exception("Error. Se encontro un problema al crear la tutoria.");
         }
@@ -73,7 +74,13 @@ public class TutorialLogicImpl implements TutorialLogic {
         List<TutorialDTO> response = new ArrayList<>();
         try {
             UserProfile userProfile = userProfileRepository.findById(user.getId()).get();
-            Set<Tutorial> tutorials = userProfile.getTutorials();
+            Set<Tutorial> tutorials = new HashSet<>();
+            if (Util.ROLE_TEACHER.equals(Util.getRole(user.getRoles()))){
+                tutorials = userProfile.getInstructorTutorials();
+            } else if (Util.ROLE_STUDENT.equals(Util.getRole(user.getRoles()))){
+                tutorials = userProfile.getTutorials();
+            }
+
             for (Tutorial data: tutorials) {
                 response.add(Util.mapEntityToDTOTutorial(data));
             }
@@ -88,7 +95,12 @@ public class TutorialLogicImpl implements TutorialLogic {
         TutorialDTO response;
         try {
             Tutorial tutorial = tutorialRepository.findById(id).get();
-            UserProfile userProfile = tutorial.getUserProfile();
+            UserProfile userProfile = new UserProfile();
+            if (Util.ROLE_TEACHER.equals(Util.getRole(user.getRoles()))){
+                userProfile = tutorial.getInstructorProfile();
+            } else if (Util.ROLE_STUDENT.equals(Util.getRole(user.getRoles()))){
+                userProfile = tutorial.getUserProfile();
+            }
 
             if (user.getId() == userProfile.getId()) {
                 response = Util.mapEntityToDTOTutorial(tutorial);
@@ -156,7 +168,7 @@ public class TutorialLogicImpl implements TutorialLogic {
 
         if (tutorialDTO.getStatus().equals(Util.STATUS_SCHEDULED)){
             tutorial.setStatus(Util.STATUS_SCHEDULED);
-            tutorial.setScheduledDate(tutorial.getScheduledDate());
+            tutorial.setScheduledDate(Util.generateScheduledDate(tutorialDTO));
             tutorial.setComment(tutorialDTO.getComment() != null ? tutorialDTO.getComment() : "");
         }
 

@@ -6,12 +6,17 @@ import co.edu.poli.tutorias.entity.UserProfile;
 import co.edu.poli.tutorias.logic.dto.TutorialDTO;
 import co.edu.poli.tutorias.logic.dto.UserProfileDTO;
 
+import java.text.DateFormat;
 import java.text.SimpleDateFormat;
+import java.time.LocalDate;
+import java.time.ZoneId;
+import java.time.format.DateTimeFormatter;
 import java.util.*;
 
 public class Util {
 
     public static final String DATE_FORMAT_HOUR = "yyyy-MM-dd HH:mm:ss";
+    public static final String DATE_FORMAT = "yyyy-MM-dd";
 
     public static final String STATUS_CREATED = "Creada";
     public static final String STATUS_RETURNED_STUDENT = "Devuelta por Alumno";
@@ -75,7 +80,7 @@ public class Util {
         List<String> availabilityDateList = new ArrayList<>();
         for (String day: availabilityDate) availabilityDateList.add(day.trim());
 
-        response.setScheduledDate(data.getScheduledDate() != null ? new SimpleDateFormat(DATE_FORMAT_HOUR).format(data.getScheduledDate()): "");
+        response.setScheduledDate(data.getScheduledDate() != null ? data.getScheduledDate() : "");
         response.setAvailabilityDate(availabilityDateList);
         response.setAvailabilityStartTime(availabilityDateParts[1].trim());
         response.setAvailabilityEndTime(availabilityDateParts[2].trim());
@@ -117,5 +122,31 @@ public class Util {
         response = response.concat(" - "+data.getAvailabilityEndTime());
 
         return response;
+    }
+
+    public static String generateScheduledDate(TutorialDTO data) throws Exception {
+        String simpleDateFormat = castDateFormat(data.getScheduledDate());
+        String response = simpleDateFormat.concat(", ");
+        response = response.concat(data.getAvailabilityStartTime());
+        response = response.concat(" - "+data.getAvailabilityEndTime());
+
+        return response;
+    }
+
+    public static String castDateFormat(String data) throws Exception{
+        DateFormat dateFormat = new SimpleDateFormat(DATE_FORMAT);
+
+        ZoneId defaultZoneId = ZoneId.systemDefault();
+        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd'T'HH:mm:ss.SSS'Z'", Locale.ENGLISH);
+        LocalDate localDate  = LocalDate.parse(data, formatter);
+
+        Date date = null;
+        try {
+            date = Date.from(localDate.atStartOfDay(defaultZoneId).toInstant());
+        } catch (Exception ex) {
+            throw ex;
+        }
+
+        return date != null ? dateFormat.format(date) : "";
     }
 }
